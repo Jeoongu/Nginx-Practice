@@ -61,7 +61,7 @@ jobs:
         host: ${{ secrets.HOST }}
         key: ${{ secrets.KEY }}
         script: |
-          sudo docker pull ${{ secrets.DOCKER_REPO }}/blue-green
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blue-green # 일단 USERNAME으로 변경
           chmod 777 ./deploy.sh
           ./deploy.sh
           docker image prune -f
