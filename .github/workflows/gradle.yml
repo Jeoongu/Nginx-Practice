@@ -6,13 +6,11 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
     - uses: actions/checkout@v4
@@ -41,8 +39,8 @@ jobs:
       run: |
         sudo chmod 666 /var/run/docker.sock
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build -t ${{ secrets.DOCKER_REPO }}/blue-green .
-        docker push ${{ secrets.DOCKER_REPO }}/blue-green
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/blue-green . # USERNAME과 REPO는 같은 것이 아닌가? 이해 필요
+        docker push ${{ secrets.DOCKER_USERNAME }}/blue-green
         
     ## deploy.sh 파일 서버로 전달하기(복사 후 붙여넣기)
     - name: Send deploy.sh
