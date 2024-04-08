@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: Nginx - Non-stop deployment
 
 on:
   push:
@@ -61,7 +61,8 @@ jobs:
         host: ${{ secrets.HOST }}
         key: ${{ secrets.KEY }}
         script: |
-          sudo docker pull ${{ secrets.DOCKER_REPO }}/blue-green
-          chmod 777 ./deploy.sh
-          ./deploy.sh
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blue-green # 일단 USERNAME으로 변경
+          docker-compose up -d # 올리는 부분 추가
+          chmod 777 ./scripts/deploy.sh
+          ./scripts/deploy.sh
           docker image prune -f
